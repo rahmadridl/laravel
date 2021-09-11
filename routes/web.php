@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Members;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('users', \App\Http\Controllers\UsersController::class);
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'verified']],function(){
+    Route::get('/dashboard', function(){
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('member', Members::class)->name('member');
+});
