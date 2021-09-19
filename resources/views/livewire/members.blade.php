@@ -1,5 +1,5 @@
 <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">Data Anggota</h2>
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight">Data Produk</h2>
 </x-slot>
 
 <div class="py-12">
@@ -15,7 +15,7 @@
                 </div>
             @endif
 
-            <button wire:click="create()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Tambah Anggota</button>
+            <button wire:click="create()" class="btn btn-success btn-block">Tambah Produk</button>
             
             @if($isModal)
                 @include('livewire.create')
@@ -25,23 +25,25 @@
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="px-4 py-2">Nama</th>
-                        <th class="px-4 py-2">Email</th>
-                        <th class="px-4 py-2">Telp</th>
-                        <th class="px-4 py-2 w-20">Status</th>
-                        <th class="px-4 py-2">Action</th>
+                        <th class="px-4 py-2">Harga</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($members as $row)
                         <tr>
                             <td class="border px-4 py-2">{{ $row->name }}</td>
-                            <td class="border px-4 py-2">{{ $row->email }}</td>
-                            <td class="border px-4 py-2">{{ $row->phone }}</td>
-                            <td class="border px-4 py-2">{!! $row->status_label !!}</td>
-                            <td class="border px-4 py-2">
-                                <button wire:click="edit({{ $row->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-                                <button wire:click="delete({{ $row->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Hapus</button>
-                            </td>
+                            <td class="border px-4 py-2">{{ $row->price }}</td>
+                            @can('user_access')
+                                <td class="border px-4 py-2">
+                                    <button wire:click="edit({{ $row->id }})" class="btn btn-success btn-block">Edit</button>
+                                    <button wire:click="delete({{ $row->id }})" class="btn btn-success btn-block">Hapus</button>
+                                </td>
+                            @endcan
+                            @can('task_access')
+                                <td class="border px-4 py-2">
+                                    <button wire:click="addToCart({{ $row->id }})" class="btn btn-success btn-block">Add</button>
+                                </td>
+                            @endcan
                         </tr>
                     @empty
                         <tr>

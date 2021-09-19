@@ -30,6 +30,24 @@
                         </div>
 
                         <div class="px-4 py-5 bg-white sm:p-6">
+                            <label for="phone" class="block font-medium text-sm text-gray-700">phone</label>
+                            <input type="number" name="phone" id="phone" class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   value="{{ old('phone', '') }}" />
+                            @error('phone')
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            <label for="perusahaan" class="block font-medium text-sm text-gray-700">Perusahaan</label>
+                            <input type="text" name="perusahaan" id="perusahaan" class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   value="{{ old('perusahaan', '') }}" />
+                            @error('perusahaan')
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        
+                        <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="password" class="block font-medium text-sm text-gray-700">Password</label>
                             <input type="password" name="password" id="password" class="form-input rounded-md shadow-sm mt-1 block w-full" />
                             @error('password')

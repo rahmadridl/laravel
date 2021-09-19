@@ -7,7 +7,7 @@ use App\Models\Member;
 
 class Members extends Component
 {
-    public $members, $name, $email, $phone, $status, $member_id;
+    public $members, $name, $price, $member_id;
     public $isModal;
 
     public function render()
@@ -24,10 +24,7 @@ class Members extends Component
 
     public function resetFields(){
         $this->name = '';
-        $this->email = '';
-        $this->phone = '';
-        $this->status = '';
-        $this->member_id = '';
+        $this->price = '';
     }
 
     public function openModal(){
@@ -43,9 +40,7 @@ class Members extends Component
         //MEMBUAT VALIDASI
         $this->validate([
             'name' => 'required|string',
-            'email' => 'required|email|unique:members,email,' . $this->member_id,
-            'phone_number' => 'required|numeric',
-            'status' => 'required'
+            'price' => 'required',
         ]);
 
         //QUERY UNTUK MENYIMPAN / MEMPERBAHARUI DATA MENGGUNAKAN UPDATEORCREATE
@@ -53,9 +48,7 @@ class Members extends Component
         //JIKA TIDAK, MAKA TAMBAHKAN DATA BARU
         Member::updateOrCreate(['id' => $this->member_id], [
             'name' => $this->name,
-            'email' => $this->email,
-            'phone_number' => $this->phone_number,
-            'status' => $this->status,
+            'price' => $this->harga,
         ]);
 
         //BUAT FLASH SESSION UNTUK MENAMPILKAN ALERT NOTIFIKASI
@@ -71,9 +64,7 @@ class Members extends Component
         //LALU ASSIGN KE DALAM MASING-MASING PROPERTI DATANYA
         $this->member_id = $id;
         $this->name = $member->name;
-        $this->email = $member->email;
-        $this->phone_number = $member->phone_number;
-        $this->status = $member->status;
+        $this->price = $member->price;
 
         $this->openModal(); //LALU BUKA MODAL
     }

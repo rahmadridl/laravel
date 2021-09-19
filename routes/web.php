@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PostsController;
 use App\Http\Livewire\Members;
 
 /*
@@ -26,6 +29,29 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('users', \App\Http\Controllers\UsersController::class);
 });
 
+Route::get('products', [ProductController::class, 'index'])->name('products');
+Route::get('cart', [ProductController::class, 'cart'])->name('cart');
+Route::get('/add-to-cart/{product}', [ProductController::class, 'addToCart'])->name('add-cart');
+Route::get('/remove/{id}', [ProductController::class,'removeFromCart'])->name('remove');
+Route::get('/change-qty/{product}', [ProductController::class,'changeQty'])->name('change_qty');
+Route::post('products', [ProductController::class, 'store'])->name('products');
+Route::get('create', [ProductController::class, 'create']);
+// Route::get('posts/{post}/edit', [ProductController::class, 'edit']);
+// Route::put('posts/{post}', [ProductController::class, 'update']);
+// Route::delete('posts/{post}', [ProductController::class, 'destroy']);
+
+Route::post('/pay', [PaymentController::class,'pay'])->name('pay');
+Route::post('/indipay/response/success', [PaymentController::class,'response'])->name('pay.response');
+Route::post('/indipay/response/failure', [PaymentController::class,'response'])->name('pay.response');
+Route::get('payment-success', [PaymentController::class,'paymentSuccess'])->name("success.pay");
+
+Route::get('posts', [PostsController::class, 'index'])->name('posts');
+Route::post('posts', [PostsController::class, 'store'])->name('posts');
+Route::get('posts/create', [PostsController::class, 'create']);
+Route::get('posts/{post}/edit', [PostsController::class, 'edit']);
+Route::put('posts/{post}', [PostsController::class, 'update']);
+Route::delete('posts/{post}', [PostsController::class, 'destroy']);
+
 Route::group(['middleware' => ['auth:sanctum', 'verified']],function(){
     Route::get('/dashboard', function(){
         return view('dashboard');
@@ -33,3 +59,4 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']],function(){
 
     Route::get('member', Members::class)->name('member');
 });
+
