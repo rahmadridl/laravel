@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\KerjaController;
 use App\Http\Livewire\Members;
 
 /*
@@ -56,7 +57,14 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']],function(){
     Route::get('/dashboard', function(){
         return view('dashboard');
     })->name('dashboard');
-
-    Route::get('member', Members::class)->name('member');
 });
+
+Route::get('/kerja', [KerjaController::class, 'index'])->name('kerja');
+Route::get('lamar', [KerjaController::class, 'index2'])->name('lamar');
+Route::post('/kerja', [KerjaController::class, 'store'])->name('kerja');
+Route::get('/daftar/{id}', [KerjaController::class, 'daftar']);
+Route::get('/add-kerja', [KerjaController::class, 'addKerja']);
+Route::get('/add-lamar/{id}', [KerjaController::class, 'addLamar']);
+Route::get('/get-lamar/{id}', [KerjaController::class, 'getLamarsByKerja']);
+
 

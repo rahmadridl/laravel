@@ -25,6 +25,14 @@
 
                 @can('user_access')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('lamar') }}" :active="request()->routeIs('lamar')">
+                            Pelamar
+                        </x-jet-nav-link>
+                    </div>
+                @endcan
+
+                @can('user_access')
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
                             Users
                         </x-jet-nav-link>
